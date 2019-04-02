@@ -1,5 +1,5 @@
 /*
- * Nombre: Profesor
+ * Nombre: ProfesorImpl
  * Propiedades:
  *       Basicas:
  *           String codigo   CONSULTABLE Y MODIFICABLE
@@ -12,6 +12,8 @@
  * Restricciones:
  *   -la edad debe ser positiva
  * Metodos añadidos:
+ * public ProfesorImpl pedirCrear();
+ *
  * Metodos interface:
  * public int getProfesorID();
  * public String getNombre();
@@ -28,6 +30,10 @@
 package Clases;
 import Interfaces.*;
 import Enumerados.*;
+import Validar.Validar;
+
+import java.util.Scanner;
+
 public class ProfesorImpl implements Profesor{
 
     private String codigo;
@@ -76,12 +82,20 @@ public class ProfesorImpl implements Profesor{
         this.edad = edad;
     }
 
+    /*Metodos añadidos*/
+    public void superCrear(String codigo, String nombre, Sexo sexo, int edad){
+        setCodigo(codigo);
+        setNombre(nombre);
+        setSexo(sexo);
+        setEdad(edad);
+    }
+
 
     /*Metodos Object*/
     @Override
     public String toString (){
         String cadena;
-        cadena = getCodigo()+","+getNombre()+","+getSexo()+","+getEdad()+"\n";
+        cadena = getCodigo()+","+getNombre()+","+getSexo()+","+getEdad();
         return cadena;
     }
 }

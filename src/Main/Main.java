@@ -1,7 +1,6 @@
 /*
 * PSEUDOCODIGO
 * inicio
-* asegurarExistenciaArchivo
 * si (archivo existe)
 *   repetir
 *       mostrarMenuLeerValidarOpcion
@@ -29,19 +28,19 @@ import Utilidades.Utilidad;
 import Validar.Validar;
 
 import java.io.File;
-import java.io.IOException;
+
 
 public class Main {
     public static void main(String[] args) {
-        File archivoProfesores = new File("./archivoProfesores.txt");
+        File archivoProfesores = new File("./profesoresArchivo.txt");
         Utilidad util = new Utilidad();
         Gestion gest = new Gestion();
         Validar validar = new Validar();
+        ProfesorImpl profe = null;
         String codigo = "";
         int op;
 
-        //asegurarExistenciaArchivo
-        gest.asegurarExistenciaArchivo(archivoProfesores);
+
         if (archivoProfesores.exists()){
             do {
                 //mostrarMenuLeerValidarOpcion
@@ -67,7 +66,7 @@ public class Main {
                             break;
                         case 5:
                             //Añadir profesor al archivo
-                            gest.addToFile(archivoProfesores, gest.generarProfesor());
+                            gest.addToFile(archivoProfesores,gest.generarProfesor() );
                             break;
                         case 6:
                             //Ver profesores del archivo

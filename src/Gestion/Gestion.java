@@ -175,9 +175,7 @@ public class Gestion {
             while(buf.ready()){
                 registro = buf.readLine();
                 campos = registro.split(",");
-
                 if ( Integer.parseInt(campos[EDAD]) < minimo){
-
                     minimo = Integer.parseInt(campos[EDAD]);
                     profe = new ProfesorImpl(campos[0], campos[1],Sexo.valueOf(campos[2]), Integer.parseInt(campos[3]));
                 }
@@ -316,38 +314,6 @@ public class Gestion {
 
     /*
      * INTERFAZ
-     * Signatura: public ProfesorImpl generarProfesor ()
-     * Comentario: pide los datos para instanciar un objeto profesor y lo instancia y lo devuelve
-     * Precondiciones:
-     * Entradas:
-     * Salidas: devuelve un profesor
-     * Postcondiciones: asociado al nombre devuelve un profesor
-     *
-     * */
-    public ProfesorImpl generarProfesor(){
-            Scanner sc = new Scanner(System.in);
-            Validar validar = new Validar();
-            ProfesorImpl profe = null;
-            String nombre, codigo;
-            int edad;
-            Sexo sexo;
-
-            System.out.println("Codigo profesor: ");
-            codigo = sc.next();
-            System.out.println("Nombre: ");
-            nombre = sc.next();
-            edad = validar.edad();
-            sexo = validar.sexo();
-
-            profe = new ProfesorImpl(codigo.toUpperCase(), nombre.toUpperCase(), sexo, edad);
-
-
-            return profe;
-    }
-
-
-    /*
-     * INTERFAZ
      * Signatura: public void imprimirProfesores(File archivo)
      * Comentario: imprime todos los profesores
      * Precondiciones: por referencia se pasan un tipo File . La ruta del archivo debe ser válida.
@@ -384,26 +350,120 @@ public class Gestion {
     }
 
     /*
-    * INTERFAZ
-    * Signatura: public void asegurarExistenciaArchivo (File archivo)
-    * Comentario: Asegura la existencia del archivo. Si no existe, lo crea y le añade los registros básicos.
-    * Precondiciones: se pasa el archivo (existente o no)
-    * Entradas: File archivo
-    * SalidaS:
-    * Postcondiciones: se asegura que el archivo existirá
-    * */
-    public void asegurarExistenciaArchivo(File archivoProfesores){
-        boolean existencia;
-        Utilidad util = new Utilidad();
-        try {
-            existencia = archivoProfesores.createNewFile(); //si no existe el archivo lo crea
-            if (existencia){
-                util.cargarFichero(archivoProfesores);
+     * INTERFAZ
+     * Signatura: public String[] obtenerCodigos(File archivo)
+     * Comentario: de un fichero dado extrae y coloca en un array de Strings todos los valores del campo "codigo"
+     * Precondiciones: el archivo debe existir y se pasa por referencia.
+     * Entradas: File archivo
+     * Salidas: array que es el conjunto de los valores de todos los registros de dicho campo
+     * Postcondiciones: asociado al nombre se devuelve el array
+     * */
+    //nota de mejora: esto se podría hacer con tipos genéricos y estaría to guay
+    public String[] obtenerCodigos(File archivo){
+        String[] array =new String[500];
+        FileReader leer = null;
+        BufferedReader buf = null;
+        String registro = "";
+        String campos[] ;
+
+
+        try{
+            leer = new FileReader(archivo);
+            buf = new BufferedReader(leer);
+            int i = 0;
+
+            while(buf.ready() && i < array.length){
+
+                registro = buf.readLine();
+                campos = registro.split(",");
+
+                array[i] = campos[0];
+
+                ++i;
             }
-        } catch (IOException e) {
+            buf.close();
+            leer.close();
+        }catch (IOException e){
             e.printStackTrace();
         }
 
+        return array;
     }
+    /*
+     * INTERFAZ
+     * Signatura: public ProfesorImpl generarProfesor ()
+     * Comentario: pide los datos para instanciar un objeto profesor y lo instancia y lo devuelve
+     * Precondiciones:
+     * Entradas:
+     * Salidas: devuelve un profesor
+     * Postcondiciones: asociado al nombre devuelve un profesor
+     *
+     * */
+    public ProfesorImpl generarProfesor(){
+        Scanner sc = new Scanner(System.in);
+        Validar validar = new Validar();
+        ProfesorImpl profe = null;
+        String nombre, codigo;
+        int edad;
+        Sexo sexo;
+
+        System.out.println("Codigo profesor: ");
+        codigo = sc.next();
+        System.out.println("Nombre: ");
+        nombre = sc.next();
+        edad = validar.edad();
+        sexo = validar.sexo();
+
+        profe = new ProfesorImpl(codigo.toUpperCase(), nombre.toUpperCase(), sexo, edad);
+
+
+        return profe;
+    }
+
+
+
+    /*
+    * INTERFAZ
+    * Signatura: public boolean isCodigoRepetido (File archivo, String codigo)
+    * Comentario: dado un codigo y un archivo, devuelve true si ese codigo ya se encuentra en ese archivo y false si no.
+    * Precondiciones: El archivo debe existir y contener registros
+    * Entrada: File archivo y String codigo
+    * Salidas: boolean
+    * Postcondiciones: asociado al nombre devuelve true si el codgio ya existe en el archivo y false si no
+    * */
+    public boolean isCodigoRepetido(File archivo,String codigo){
+        boolean repetido = false;
+        String[] array =new String[500];
+        FileReader leer = null;
+        BufferedReader buf = null;
+        String registro = "";
+        String campos[] ;
+
+
+        try{
+            leer = new FileReader(archivo);
+            buf = new BufferedReader(leer);
+            int i = 0;
+
+            while(buf.ready() && i < array.length){
+
+                registro = buf.readLine();
+                campos = registro.split(",");
+
+                if (campos[0].equals(codigo)){
+                    repetido=true;
+                }
+
+                ++i;
+            }
+            buf.close();
+            leer.close();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return repetido;
+    }
+
 
 }

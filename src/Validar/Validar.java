@@ -3,7 +3,10 @@ package Validar;
 import Clases.ProfesorImpl;
 import Enumerados.Sexo;
 import Gestion.Gestion;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Validar {
@@ -60,7 +63,7 @@ public class Validar {
         Sexo sexo = Sexo.NULL;
         String respuesta="";
         do {
-            System.out.println("Escribe tu genero (Hombre/Mujer/Otro): ");
+            System.out.println("Escribe el genero (Hombre/Mujer/Otro): ");
             respuesta = sc.next();
         }while(!respuesta.toLowerCase().equals("hombre") && !respuesta.toLowerCase().equals("mujer") && !respuesta.toLowerCase().equals("otro"));
         switch (respuesta){
@@ -79,7 +82,7 @@ public class Validar {
 
     /*
      * INTERFAZ
-     * Signatura: public String codigo()
+     * Signatura: public String codigo(File archivo)
      * Comentario: pide un codigo de profesor
      * Precondiciones:
      * Entrada:
@@ -89,8 +92,11 @@ public class Validar {
     public String codigo(){
         Scanner sc = new Scanner(System.in);
         String codigo="";
+        Gestion gest = new Gestion();
+        //nota: añade validacion de codigo (si ya existe, no es valido)
         System.out.println("Introduce el codigo del profesor: ");
         codigo = sc.next();
+
 
        return codigo;
     }
