@@ -41,10 +41,10 @@ public class Gestion {
         try{
             escribir = new FileWriter(archivo,true);
             buf = new BufferedWriter(escribir);
+            buf.write(profe.toString());
             buf.newLine();
-            escribir.write(profe.toString());
-            escribir.flush();
-            escribir.close();
+            buf.flush();
+            buf.close();
 
         }catch (IOException e){
             e.printStackTrace();

@@ -29,7 +29,8 @@ public class Utilidad {
         return pos;
     }
 
-    /*
+    /**
+     * @deprecated
     * INTERFAZ
     * Signatura: public void cargarFichero (File archivo)
     * Comentario: carga el fichero con lo básico para que no salte nullpointerexception si lo tiene que crear de nuevo y está vacío
@@ -39,7 +40,8 @@ public class Utilidad {
     * Entrada/Salida: File archivo
     * Postcondiciones: se devuelve el fichero cargado
     * */
-    public void cargarFichero (File archivo){
+   @Deprecated
+   public void cargarFichero (File archivo){
         Gestion gest = new Gestion();
         gest.addToFile(archivo, new ProfesorImpl("PROG1", "ASUN", Sexo.MUJER,56));
         gest.addToFile(archivo, new ProfesorImpl("BBDD1", "LEO", Sexo.HOMBRE,55));
